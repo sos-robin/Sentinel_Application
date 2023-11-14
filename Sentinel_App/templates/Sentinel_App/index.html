@@ -1,0 +1,134 @@
+
+{% extends 'Sentinel_App/base.html' %}
+
+{% include "Sentinel_App/navbar.html" %}
+
+{% block content %}
+ 
+  <main id="main">
+
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+      <div class="container-md" data-aos="fade-in">
+        <div class="row">
+          <div class="col-12">
+            <div class="swiper sliderFeaturedPosts">
+              <div class="swiper-wrapper">
+                {% for post in slider_posts %}
+                <div class="swiper-slide">
+                  <a href="" class="img-bg d-flex align-items-end" style="background-image: url('{{ post.image.url }}');">
+                    <div class="img-bg-inner">
+                      <h2>{{ post.quote_title }}</h2>
+                      <p>{{ post.quote_content }}</p>
+                    </div>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="custom-swiper-button-next">
+                <span class="bi-chevron-right"></span>
+              </div>
+              <div class="custom-swiper-button-prev">
+                <span class="bi-chevron-left"></span>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
+    <!-- Post Grid Section-->
+   
+    
+    <section id="latest-featured-post" class="latest-featured-post">
+      <div class="container" data-aos="fade-up">
+        <div class="row g-5">
+          <!-- Latest Featured Section -->
+          <div class="col-lg-4">
+            <div class="post-entry-1 lg">
+              {% if latest_featured_post %}
+              <a href="{% url 'single_post' slug=latest_featured_post.slug %}"><img src="{{latest_featured_post.thumbnail.url}}" alt="" class="img-fluid"></a>
+                <div class="post-meta"> 
+                    <span class="date">{{latest_featured_post.category.name}}</span>
+                  
+                  <span class="mx-1">&bullet;</span>{{latest_featured_post.timestamp |timesince}}<span></span>
+                </div>
+                <h2><a href="{% url 'single_post' slug=latest_featured_post.slug %}">{{latest_featured_post.title}}</a></h2>
+                <p class="mb-4 d-block">{{latest_featured_post.overview }}</p>
+    
+                <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{latest_featured_post.author.profile_picture.url}}" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{latest_featured_post.author}}</h3> 
+                  </div>
+                </div>
+              {% else %}
+                <p>No latest featured post available</p>
+              {% endif %}
+            </div>
+          </div>
+          <!--End of Latest Featured post section -->
+
+          <!-- All Post Section -->
+          <div class="col-lg-4">
+            <div class="row g-5">
+              {% for obj in latest_posts %}
+                <div class="col-lg-6 custom-border">
+                  <div class="post-entry-1">
+                    <a href="{% url 'single_post' slug=obj.slug %}"><img src="{{ obj.thumbnail.url }}" alt="" class="img-fluid"></a>
+                    <div class="post-meta">
+                      <span class="date">
+                        
+                        <a href="">{{ obj.category.name }}</a>
+                        
+                      </span>
+                      <span class="mx-1">&bullet;</span>
+                      <span>{{ obj.timestamp | timesince}}</span>
+                    </div>
+                    <h2><a href="{% url 'single_post' slug=obj.slug %}">{{ obj.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!--End of all post Section-->
+    
+          <!-- Trending Section -->
+          <div class="col-lg-4"> 
+            <div class="trending">
+              <h3>Trending</h3>
+              <ul class="trending-post">
+                {% for obj in trending_posts %}
+                <li>
+                  <a href="{% url 'single_post' slug=obj.slug %}">
+                    <span class="number">{{forloop.counter}}</span>
+                    <h3>{{obj.title}}</h3>
+                    <span class="author">{{obj.author}}</span>
+                  </a>
+                </li>
+                {% endfor%}
+                <!-- Add more trending items here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </style>
+    
+    
+    
+    <!--End of Post Grid Section-->
+  
+
+
+  </main><!-- End #main -->
+
+  
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  {% endblock %}
+  

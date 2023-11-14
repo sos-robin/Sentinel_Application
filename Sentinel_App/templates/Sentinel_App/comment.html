@@ -1,0 +1,24 @@
+{% extends 'Sentinel_App/base.html' %}
+
+{% include "Sentinel_App/navbar.html" %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <br>
+        <br>
+        <h5 class="comment-title text-center">Leave a Comment</h5>
+        <form id="myForm" method="post">
+          {{ newcommentform.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Post Comment</button>
+        </form>
+      </div>
+    </div>
+</div>
+<br>
+{%endblock%}
+

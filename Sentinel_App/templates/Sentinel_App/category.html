@@ -1,0 +1,88 @@
+{% extends 'Sentinel_App/base.html' %}
+
+{% include "Sentinel_App/navbar.html" %}
+
+{% block content %}
+
+
+  <main id="main">
+    <section>
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-9" data-aos="fade-up">   
+            <h3 class="category-title">Category: {{catlist.cat}}</h3>
+              {% for post in catlist.posts %}
+            <div class="d-md-flex post-entry-2 half">
+              <a href="{% url 'single_post' slug=post.slug %}" class="me-4 thumbnail">
+                <img src="{{post.thumbnail.url }}" alt="" class="img-fluid">
+              </a>
+              <div>
+                <div class="post-meta"><span class="date">{{catlist.cat}}</span> <span class="mx-1">&bullet;</span> <span>{{post.timestamp}}</span></div>
+                <h3><a href="{% url 'single_post' slug=post.slug %}">{{post.title}}</a></h3>
+                <p>{{post.overview}}</p>
+                <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{post.author.profile_picture.url }}" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{post.author |title}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+
+          <div class="col-md-3">
+            <!-- ======= Sidebar ======= -->
+            <div class="aside-block">
+              <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Latest</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <!-- Latest -->
+                <!-- Latest Posts Tab Content -->
+                <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+                  {% for post in latest_posts %}
+                  <div class="post-entry-1 border-bottom">
+                    <div class="post-meta">
+                      <span class="date">{{ post.category.name }}</span>
+                      <span class="mx-1">&bullet;</span>
+                      <span>{{ post.timestamp|date:"M d, Y" }}</span>
+                    </div>
+                    <h2 class="mb-2"><a href="{% url 'single_post' slug=post.slug %}">{{ post.title }}</a></h2>
+                    <span class="author mb-3 d-block">{{ post.author }}</span>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+  
+            <div class="aside-block">
+              <div class="col-6 col-lg-2">
+                <h3 class="footer-heading">Categories</h3>
+                <ul class="footer-links list-unstyled">
+                  {% for category in category_list %}
+                  <li>
+                    <a class="dropdown-item" href="/category/{{category.name}}"><i class="bi bi-chevron-right"></i>
+                      {{category.name |title}}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div><!-- End Categories -->
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+ 
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+ {% endblock %}
